@@ -12,4 +12,6 @@ for feature in deepStateMapJson["features"]:
         polygonCount += 1
         areaOfPolygon = area(feature["geometry"])
         print("Area of Polygon",polygonCount,":",areaOfPolygon)
+        # Use fill as grouping criteria
+        print(feature["properties"]["name"],feature["properties"]["fill"])
 print(polygonCount)
