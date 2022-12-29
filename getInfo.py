@@ -17,13 +17,13 @@ from datetime import datetime
 include_pre2022 = False
 no_ukrainian_occupation = False
 
-timestamp = 1669847043
+timestamp = 1672269789
 
 url_last = "https://deepStatemap.live/api/history/last.geojson"
 # old geojson to test
 url = "https://deepstatemap.live/api/history/"+str(timestamp)+"/geojson"
 
-r = requests.get(url)
+r = requests.get(url_last)
 deepStateMapJson = r.json()
 polygonCount = 0
 liberated_m2 = 0
@@ -67,7 +67,6 @@ for feature in deepStateMapJson["features"]:
         # print(status)
 # print(polygonCount)
 total_m2 = liberated_m2 + occupied_m2 + contested_m2
-print("date:", )
 if include_pre2022:
     print("since the maximum occupation of Ukrainian territory (pre feb22) to", datetime.fromtimestamp(timestamp), ":")
 else:
