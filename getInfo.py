@@ -1,11 +1,8 @@
 import requests
-import geojson
-import json
 
 # area function returns the area of a geojson polygon in square meters
 from area import area
 
-import pymongo
 from datetime import datetime
 
 # color codes
@@ -68,9 +65,9 @@ for feature in deepStateMapJson["features"]:
 # print(polygonCount)
 total_m2 = liberated_m2 + occupied_m2 + contested_m2
 if include_pre2022:
-    print("since the maximum occupation of Ukrainian territory (pre feb22) to", datetime.fromtimestamp(timestamp), ":")
+    print(f"since the maximum occupation of Ukrainian territory (pre-feb22 occupied territories included) to {datetime.fromtimestamp(timestamp)}:")
 else:
-    print("since the maximum occupation of Ukrainian territory (beyond feb22) to", datetime.fromtimestamp(timestamp), ":")
-print(round((liberated_m2 / total_m2)*100, 2), "% of land has been liberated")
-print(round((occupied_m2 / total_m2)*100, 2), "% of land remains occupied")
-print(round((contested_m2 / total_m2)*100, 2), "% of land is contested")
+    print(f"since the maximum occupation of Ukrainian territory (pre-feb22 occupied territories NOT included) to {datetime.fromtimestamp(timestamp)}:")
+print(f"{round((liberated_m2 / total_m2)*100, 2)} % of land has been liberated")
+print(f"{round((occupied_m2 / total_m2)*100, 2)} % of land remains occupied")
+print(f"{round((contested_m2 / total_m2)*100, 2)} % of land is contested")
