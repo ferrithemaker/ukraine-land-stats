@@ -78,7 +78,7 @@ total_m2 = liberated_m2 + occupied_m2 + contested_m2
 liberated_percent = round((liberated_m2 / total_m2)*100, 2)
 occupied_percent = round((occupied_m2 / total_m2)*100, 2)
 contested_percent = round((contested_m2 / total_m2)*100, 2)
-register = {"timestamp": int(datetime.now().timestamp()), "total_m2": total_m2, "liberated_m2": liberated_m2,
+register = {"date": datetime.now().replace(microsecond=0), "timestamp": int(datetime.now().timestamp()), "total_m2": total_m2, "liberated_m2": liberated_m2,
             "occupied_m2": occupied_m2, "contested_m2": contested_m2,
             "liberated_percent": liberated_percent, "occupied_percent": occupied_percent,
             "contested_percent": contested_percent}
