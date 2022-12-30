@@ -21,7 +21,7 @@ collection = db.land_data
 collection.delete_many({})
 
 # color codes
-# #0f9d58 - Liberated
+# #0f9d58 #0288d1 - Liberated
 # #ff5252 #880e4f #a52714 - Occupied
 # #bcaaa4 - Contested
 
