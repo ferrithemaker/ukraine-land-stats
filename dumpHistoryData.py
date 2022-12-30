@@ -63,7 +63,8 @@ for timestamp in timestamps:
             # print("Area of Polygon",polygonCount,":",areaOfPolygon," ", end = "" )
             # use fill as grouping criteria
             status = ""
-            if feature["properties"]["fill"] == "#0f9d58":
+            if feature["properties"]["fill"] == "#0f9d58" \
+                    or feature["properties"]["fill"] == "#0288d1":
                 polygonCount += 1
                 status = "Liberated"
                 liberated_m2 += areaOfPolygon

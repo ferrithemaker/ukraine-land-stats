@@ -6,7 +6,7 @@ from area import area
 from datetime import datetime
 
 # color codes
-# #0f9d58 - Liberated
+# #0f9d58 #0288d1 - Liberated
 # #ff5252 #880e4f #a52714 - Occupied
 # #bcaaa4 - Contested
 
@@ -47,7 +47,8 @@ for feature in deepStateMapJson["features"]:
         # print("Area of Polygon",polygonCount,":",areaOfPolygon," ", end = "" )
         # use fill as grouping criteria
         status = ""
-        if feature["properties"]["fill"] == "#0f9d58":
+        if feature["properties"]["fill"] == "#0f9d58" \
+                or feature["properties"]["fill"] == "#0288d1":
             polygonCount += 1
             status = "Liberated"
             liberated_m2 += areaOfPolygon
