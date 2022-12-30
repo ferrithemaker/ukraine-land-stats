@@ -5,6 +5,19 @@ from area import area
 
 from datetime import datetime
 
+import credentials
+
+import pymongo
+
+# load credentials
+user = credentials.login['user']
+password = credentials.login['password']
+url = credentials.login['url']
+
+# connect to mongodb
+client = pymongo.MongoClient("mongodb+srv://"+user+":"+password+"@"+url+"/?retryWrites=true&w=majority")
+db = client.ukraine_land_stats
+
 # color codes
 # #0f9d58 - Liberated
 # #ff5252 #880e4f #a52714 - Occupied
