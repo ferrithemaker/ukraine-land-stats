@@ -22,21 +22,27 @@ collection.delete_many({})
 
 # color codes
 # #0f9d58 #0288d1 - Liberated
-# #ff5252 #880e4f #a52714 - Occupied
+# #ff5252 #880e4f #a52714 #000000 - Occupied
 # #bcaaa4 - Contested
 
 # set false to ignore pre 2014 occupation and occupied territories not in ukraine
 include_pre2022 = False
 no_ukrainian_occupation = False
 
-timestamps = [1672269789]
+# historic data approx. every week from 3-4-22 to 29-12-22
+timestamps = [1648989208, 1649616561, 1650217084, 1650820154, 1651432119, 1652037394, 1652649626
+              , 1653244377, 1653860666, 1654444727, 1655069785, 1655669874, 1656248124, 1656868117
+              , 1657393470, 1658009478, 1658687367, 1659264086, 1659891938, 1660513442, 1660417820
+              , 1661030558, 1661718037, 1662300023, 1662907210, 1663537536, 1664141413, 1664736558
+              , 1665351604, 1665871137, 1666561008, 1667169761, 1667687093, 1668296906, 1668984791
+              , 1669587257, 1670191262, 1670798042, 1671404089, 1671922927, 1672269789]
+
 
 for timestamp in timestamps:
-    url_last = "https://deepStatemap.live/api/history/last.geojson"
-    # old geojson to test
+    # old geojson data
     url = "https://deepstatemap.live/api/history/"+str(timestamp)+"/geojson"
 
-    r = requests.get(url_last)
+    r = requests.get(url)
     deepStateMapJson = r.json()
     polygonCount = 0
     liberated_m2 = 0
@@ -70,6 +76,7 @@ for timestamp in timestamps:
                 liberated_m2 += areaOfPolygon
             if (feature["properties"]["fill"] == "#ff5252" and no_ukrainian_occupation) \
                     or (feature["properties"]["fill"] == "#880e4f" and include_pre2022) \
+                    or (feature["properties"]["fill"] == "#000000" and include_pre2022) \
                     or feature["properties"]["fill"] == "#a52714":
                 polygonCount += 1
                 status = "Occupied"

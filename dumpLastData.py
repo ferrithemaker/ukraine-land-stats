@@ -2,8 +2,21 @@ import requests
 
 # area function returns the area of a geojson polygon in square meters
 from area import area
-
 from datetime import datetime
+import credentials
+
+import pymongo
+
+# load credentials
+user = credentials.login['user']
+password = credentials.login['password']
+url = credentials.login['url']
+
+# connect to mongodb
+client = pymongo.MongoClient("mongodb+srv://"+user+":"+password+"@"+url+"/?retryWrites=true&w=majority")
+db = client.ukraine_land_stats
+collection = db.land_data
+
 
 # color codes
 # #0f9d58 #0288d1 - Liberated
@@ -14,11 +27,7 @@ from datetime import datetime
 include_pre2022 = False
 no_ukrainian_occupation = False
 
-timestamp = 1672269789
-
 url_last = "https://deepStatemap.live/api/history/last.geojson"
-# old geojson to test
-url = "https://deepstatemap.live/api/history/"+str(timestamp)+"/geojson"
 
 r = requests.get(url_last)
 deepStateMapJson = r.json()
@@ -66,10 +75,11 @@ for feature in deepStateMapJson["features"]:
         # print(status)
 # print(polygonCount)
 total_m2 = liberated_m2 + occupied_m2 + contested_m2
-if include_pre2022:
-    print(f"since the maximum occupation of Ukrainian territory (pre-feb22 occupied territories included) to {datetime.fromtimestamp(timestamp)}:")
-else:
-    print(f"since the maximum occupation of Ukrainian territory (pre-feb22 occupied territories NOT included) to {datetime.fromtimestamp(timestamp)}:")
-print(f"{round((liberated_m2 / total_m2)*100, 2)} % of land has been liberated")
-print(f"{round((occupied_m2 / total_m2)*100, 2)} % of land remains occupied")
-print(f"{round((contested_m2 / total_m2)*100, 2)} % of land is contested")
+liberated_percent = round((liberated_m2 / total_m2)*100, 2)
+occupied_percent = round((occupied_m2 / total_m2)*100, 2)
+contested_percent = round((contested_m2 / total_m2)*100, 2)
+register = {"timestamp": int(datetime.now().timestamp()), "total_m2": total_m2, "liberated_m2": liberated_m2,
+            "occupied_m2": occupied_m2, "contested_m2": contested_m2,
+            "liberated_percent": liberated_percent, "occupied_percent": occupied_percent,
+            "contested_percent": contested_percent}
+collection.insert_one(register)
