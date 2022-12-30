@@ -3,8 +3,6 @@ import requests
 # area function returns the area of a geojson polygon in square meters
 from area import area
 
-from datetime import datetime
-
 import credentials
 
 import pymongo
@@ -17,6 +15,10 @@ url = credentials.login['url']
 # connect to mongodb
 client = pymongo.MongoClient("mongodb+srv://"+user+":"+password+"@"+url+"/?retryWrites=true&w=majority")
 db = client.ukraine_land_stats
+collection = db.land_data
+
+# clean ALL previous data
+collection.delete_many({})
 
 # color codes
 # #0f9d58 - Liberated
@@ -85,3 +87,4 @@ for timestamp in timestamps:
                 "occupied_m2": occupied_m2, "contested_m2": contested_m2,
                 "liberated_percent": liberated_percent, "occupied_percent": occupied_percent,
                 "contested_percent": contested_percent}
+    collection.insert_one(register)
